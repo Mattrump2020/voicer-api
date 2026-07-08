@@ -1,0 +1,91 @@
+# =========================
+# Dependencies
+# =========================
+node_modules/
+
+# =========================
+# Build output
+# =========================
+dist/
+build/
+coverage/
+
+# =========================
+# Environment variables
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# Runtime files
+# =========================
+*.pid
+*.seed
+*.pid.lock
+
+# =========================
+# TypeScript
+# =========================
+*.tsbuildinfo
+
+# =========================
+# IDEs
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Temporary files
+# =========================
+tmp/
+temp/
+.cache/
+
+# =========================
+# Drizzle
+# =========================
+drizzle/meta/_journal.json
+
+# (Keep migrations!)
+# drizzle/
+
+# =========================
+# Supabase local
+# =========================
+.supabase/
+
+# =========================
+# Uploaded files
+# =========================
+uploads/
+exports/
+
+# =========================
+# Test output
+# =========================
+.nyc_output/
+
+# =========================
+# dotenv backups
+# =========================
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
