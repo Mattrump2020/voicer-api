@@ -1,5 +1,12 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 
+const serverUrl =
+  process.env.NODE_ENV === 'production'
+    ? process.env.API_URL || 'https://voicer-api-jwer.onrender.com/api/v1'
+    : 'http://localhost:3000/api/v1';
+
+
+
 const options: swaggerJsdoc.Options = {
   definition: {
     openapi: '3.0.0',
@@ -10,9 +17,14 @@ const options: swaggerJsdoc.Options = {
       contact: { name: 'Voicer AI Team' },
     },
     servers: [
-      { url: 'http://localhost:3000/api/v1', description: 'Local development' },
-      { url: 'https://api.voicer.ai/api/v1',description: 'Production' },
-    ],
+  {
+    url: serverUrl,
+    description:
+      process.env.NODE_ENV === 'production'
+        ? 'Production'
+        : 'Local development',
+  },
+],
     components: {
       securitySchemes: {
         bearerAuth: {
