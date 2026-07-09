@@ -75,7 +75,7 @@ drizzle/meta/_journal.json
 # Uploaded files
 # =========================
 uploads/
-exports/
+/exports/
 
 # =========================
 # Test output
