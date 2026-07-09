@@ -11,7 +11,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "db:seed": "ts-node src/db/seeds/languages.seed.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "postbuild": "drizzle-kit migrate"
   },
   "dependencies": {
     "express": "^4.18.2",
