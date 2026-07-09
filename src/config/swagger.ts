@@ -1,11 +1,5 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 
-const serverUrl =
-  process.env.NODE_ENV === 'production'
-    ? process.env.API_URL || 'https://voicer-api-jwer.onrender.com/api/v1'
-    : 'http://localhost:3000/api/v1';
-
-
 
 const options: swaggerJsdoc.Options = {
   definition: {
@@ -16,13 +10,14 @@ const options: swaggerJsdoc.Options = {
       description: 'Audio dataset collection platform — Express + Drizzle + Supabase',
       contact: { name: 'Voicer AI Team' },
     },
-    servers: [
+  servers: [
   {
-    url: serverUrl,
-    description:
-      process.env.NODE_ENV === 'production'
-        ? 'Production'
-        : 'Local development',
+    url: 'https://voicer-api-jwer.onrender.com/api/v1',
+    description: 'Production',
+  },
+  {
+    url: 'http://localhost:3000/api/v1',
+    description: 'Local development',
   },
 ],
     components: {
