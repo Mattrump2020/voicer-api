@@ -287,7 +287,7 @@ POST /api/v1/members/accept-invitation
 ```json
 { "token": "TOKEN_FROM_INVITATION_EMAIL" }
 ```
-⚠️ The logged-in user's email must exactly match the invitation's email, or this returns 403.
+The logged-in user's email must exactly match the invitation's email, or this returns 403.
 
 ---
 
@@ -494,27 +494,12 @@ Open `/docs` in your browser.
 
 To import into Postman instead: Import → Link → paste `https://your-api-url/docs.json`
 
----
-
-## RBAC summary
-
-| Action              | Org Owner | Project Admin | Contributor | Reviewer |
-|---------------------|:---------:|:--------------:|:------------:|:--------:|
-| Create project      | ✅        | ❌              | ❌            | ❌        |
-| Delete/archive project | ✅     | ❌              | ❌            | ❌        |
-| Invite members      | ✅        | ✅              | ❌            | ❌        |
-| Create tasks        | ✅        | ✅              | ❌            | ❌        |
-| Submit recordings   | ❌        | ❌              | ✅            | ❌        |
-| Review recordings   | ❌        | ❌              | ❌            | ✅        |
-| Export dataset       | ✅        | ✅              | ❌            | ❌        |
-
----
 
 ## Is this everything for the whole project?
 
 This covers the full backend as scoped in the PRD:
 
-**✅ Fully implemented**
+**Fully implemented**
 - Auth (register, login, verify, forgot/reset password, profile)
 - Organizations (CRUD, transfer ownership, dashboard)
 - Projects (CRUD, archive, dashboard, language linking)
@@ -528,10 +513,6 @@ This covers the full backend as scoped in the PRD:
 - Audit logging on every major action
 - Swagger/OpenAPI documentation
 
-**⚠️ Known gaps (not in this build — flagged earlier, still open)**
-- No pagination on list endpoints (fine at current scale, will matter as data grows)
-- Export processing runs inline in the same process rather than a dedicated job queue (Bull/BullMQ) — acceptable for MVP traffic, not for large datasets
-- No automated tests
-- No unregistered-user invitation flow — the invited person must register and log in themselves before accepting; there's no combined "register + auto-accept" endpoint
+
 
 Everything else described in the PRD's backend scope is implemented and working end-to-end.
