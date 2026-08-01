@@ -100,7 +100,7 @@ export const uploadBuffer = async (
   if (error || !data) {
     throw new Error(`Failed to upload file: ${error?.message}`);
   }
-``
+
   return { path: data.path };
 };
 
