@@ -11,8 +11,10 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "db:seed": "ts-node src/db/seeds/languages.seed.ts",
+    "db:seed:dev": "ts-node src/db/seeds/dev.seed.ts",
     "typecheck": "tsc --noEmit",
-    "postbuild": "drizzle-kit migrate"
+    "postbuild": "drizzle-kit migrate",
+    "test": "jest --runInBand"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.43.1",
