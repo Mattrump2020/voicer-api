@@ -97,11 +97,13 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 });
 
 // ── Start ─────────────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
-  logger.info(`🚀  Voicer API running on http://localhost:${PORT}`);
-  logger.info(`📖  Swagger UI   → http://localhost:${PORT}/docs`);
-  logger.info(`📋  Raw JSON     → http://localhost:${PORT}/docs.json`);
-  logger.info(`💚  Health check → http://localhost:${PORT}/health`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    logger.info(`🚀  Voicer API running on http://localhost:${PORT}`);
+    logger.info(`📖  Swagger UI   → http://localhost:${PORT}/docs`);
+    logger.info(`📋  Raw JSON     → http://localhost:${PORT}/docs.json`);
+    logger.info(`💚  Health check → http://localhost:${PORT}/health`);
+  });
+}
 
 export default app;
