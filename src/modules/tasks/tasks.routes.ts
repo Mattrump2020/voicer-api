@@ -16,7 +16,7 @@ import logger from '../../utils/logger';
 const router = Router();
 router.use(authenticate);
 
-// ─── helper: check if user can admin a project ────────────────────────────────
+// ─── helper: check if user can admin a project 
 const canAdminProject = async (projectId: string, userId: string): Promise<boolean> => {
   const [ownerCheck] = await db
     .select({ ownerId: organizations.ownerId })
@@ -36,7 +36,7 @@ const canAdminProject = async (projectId: string, userId: string): Promise<boole
   return mem?.role === 'PROJECT_ADMIN';
 };
 
-// ── POST /tasks ────────────────────────────────────────────────────────────────
+// ── POST /tasks 
 router.post('/', validate(schemas.createTask), async (req: Request, res: Response) => {
   const { projectId, title, description, instructions, languageId, taskType, targetDuration } = req.body;
   const userId = req.user!.id;
@@ -58,7 +58,7 @@ router.post('/', validate(schemas.createTask), async (req: Request, res: Respons
   }
 });
 
-// ── GET /tasks?projectId= ─────────────────────────────────────────────────────
+// ── GET /tasks?projectId= 
 router.get('/', async (req: Request, res: Response) => {
   const { projectId } = req.query;
   if (!projectId) return sendError(res, 'projectId query param is required');
@@ -90,7 +90,7 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-// ── GET /tasks/contributor/available ─────────────────────────────────────────
+// ── GET /tasks/contributor/available 
 // Returns ACTIVE tasks in projects the user is a CONTRIBUTOR on,
 // filtered to only languages the contributor speaks.
 router.get('/contributor/available', async (req: Request, res: Response) => {
@@ -149,7 +149,7 @@ router.get('/contributor/available', async (req: Request, res: Response) => {
   }
 });
 
-// ── GET /tasks/:taskId ────────────────────────────────────────────────────────
+// ── GET /tasks/:taskId 
 router.get('/:taskId', async (req: Request, res: Response) => {
   try {
     const [task] = await db
@@ -180,7 +180,7 @@ router.get('/:taskId', async (req: Request, res: Response) => {
   }
 });
 
-// ── PATCH /tasks/:taskId ──────────────────────────────────────────────────────
+// ── PATCH /tasks/:taskId 
 router.patch('/:taskId', validate(schemas.updateTask), async (req: Request, res: Response) => {
   const { title, description, instructions, languageId, taskType, targetDuration, status } = req.body;
 
@@ -215,7 +215,7 @@ router.patch('/:taskId', validate(schemas.updateTask), async (req: Request, res:
   }
 });
 
-// ── DELETE /tasks/:taskId ─────────────────────────────────────────────────────
+// ── DELETE /tasks/:taskId 
 router.delete('/:taskId', async (req: Request, res: Response) => {
   try {
     const [existing] = await db.select({ projectId: tasks.projectId }).from(tasks)
