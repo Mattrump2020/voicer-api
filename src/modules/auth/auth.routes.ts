@@ -18,11 +18,11 @@ const router = Router();
 
 const IS_DEV = process.env.NODE_ENV !== 'production';
 
-// ── helper: sign JWT ──────────────────────────────────────────────────────────
+// helper: sign JWT
 const signToken = (userId: string, email: string): string =>
   jwt.sign({ userId, email }, process.env.JWT_SECRET!, { expiresIn: '7d' });
 
-// ── POST /auth/register ───────────────────────────────────────────────────────
+// ── POST /auth/register 
 router.post('/register', validate(schemas.register), async (req: Request, res: Response) => {
   const { firstName, lastName, email, password } = req.body;
 
@@ -40,9 +40,9 @@ router.post('/register', validate(schemas.register), async (req: Request, res: R
 
     const passwordHash  = await bcrypt.hash(password, 12);
     const verifyToken   = crypto.randomBytes(32).toString('hex');
-    const verifyExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24h
+    const verifyExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); 
 
-    // ── DEV MODE: auto-verify so you're never blocked by email ───────────────
+    // DEV MODE: auto-verify so you never blocked by email 
     // In development the user is immediately verified — no email needed.
     // In production the token is saved and a real email is sent.
     if (IS_DEV) {
@@ -52,7 +52,7 @@ router.post('/register', validate(schemas.register), async (req: Request, res: R
           lastName,
           email,
           passwordHash,
-          emailVerified: true,   // ← auto-verified
+          emailVerified: true,   // auto-verified
           verifyToken:   null,
           verifyTokenExpiresAt: null,
         })
@@ -68,7 +68,7 @@ router.post('/register', validate(schemas.register), async (req: Request, res: R
       );
     }
 
-    // ── PRODUCTION: save token, send real verification email ─────────────────
+    // ── PRODUCTION: save token, send real verification email
     const [newUser] = await db.insert(users)
       .values({
         firstName,
@@ -81,7 +81,7 @@ router.post('/register', validate(schemas.register), async (req: Request, res: R
       })
       .returning({ id: users.id });
 
-    // Audit log AFTER the insert is committed — fixes the FK 23503 error
+    // Audit log AFTER the insert is committed 
     await createAuditLog(newUser.id, 'USER_REGISTERED', newUser.id);
 
     // Email is non-blocking — a failure is logged but doesn't break registration
@@ -96,7 +96,7 @@ router.post('/register', validate(schemas.register), async (req: Request, res: R
   }
 });
 
-// ── POST /auth/dev/force-verify ───────────────────────────────────────────────
+// ── POST /auth/dev/force-verify 
 // DEV ONLY — force-verify any account by email without needing the token.
 // Returns 404 in production as if the route doesn't exist.
 router.post('/dev/force-verify', async (req: Request, res: Response) => {
@@ -126,7 +126,7 @@ router.post('/dev/force-verify', async (req: Request, res: Response) => {
   }
 });
 
-// ── GET /auth/verify-email?token= ─────────────────────────────────────────────
+// ── GET /auth/verify-email?token= 
 // Production flow — user clicks the link in their email
 router.get('/verify-email', async (req: Request, res: Response) => {
   const { token } = req.query;
@@ -156,7 +156,7 @@ router.get('/verify-email', async (req: Request, res: Response) => {
   }
 });
 
-// ── POST /auth/login ──────────────────────────────────────────────────────────
+// ── POST /auth/login 
 router.post('/login', validate(schemas.login), async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
@@ -178,7 +178,7 @@ router.post('/login', validate(schemas.login), async (req: Request, res: Respons
     if (!user) return sendUnauthorized(res, 'Invalid email or password');
 
     if (!user.emailVerified) {
-      // Give a clearer message in dev so you know what's happening
+      
       const msg = IS_DEV
         ? 'Email not verified. In dev mode, use POST /auth/dev/force-verify or register again (auto-verified).'
         : 'Please verify your email before logging in. Check your inbox.';
@@ -211,10 +211,10 @@ router.post('/login', validate(schemas.login), async (req: Request, res: Respons
   }
 });
 
-// ── POST /auth/forgot-password ────────────────────────────────────────────────
+// ── POST /auth/forgot-password 
 router.post('/forgot-password', validate(schemas.forgotPassword), async (req: Request, res: Response) => {
   const { email } = req.body;
-  // Always return the same message — prevents email enumeration attacks
+  
   const MSG = 'If an account exists for that email, a reset link has been sent.';
 
   try {
@@ -249,7 +249,7 @@ router.post('/forgot-password', validate(schemas.forgotPassword), async (req: Re
   }
 });
 
-// ── POST /auth/reset-password ─────────────────────────────────────────────────
+// ── POST /auth/reset-password 
 router.post('/reset-password', validate(schemas.resetPassword), async (req: Request, res: Response) => {
   const { token, password } = req.body;
 
@@ -279,7 +279,7 @@ router.post('/reset-password', validate(schemas.resetPassword), async (req: Requ
   }
 });
 
-// ── GET /auth/me ──────────────────────────────────────────────────────────────
+// ── GET /auth/me 
 router.get('/me', authenticate, async (req: Request, res: Response) => {
   try {
     const [user] = await db
@@ -307,7 +307,7 @@ router.get('/me', authenticate, async (req: Request, res: Response) => {
   }
 });
 
-// ── PATCH /auth/profile ───────────────────────────────────────────────────────
+// ── PATCH /auth/profile 
 router.patch('/profile', authenticate, validate(schemas.updateProfile), async (req: Request, res: Response) => {
   const { firstName, lastName, country, gender, ageRange } = req.body;
 
