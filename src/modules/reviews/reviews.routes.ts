@@ -19,7 +19,7 @@ import logger from '../../utils/logger';
 const router = Router();
 router.use(authenticate);
 
-// ── GET /reviews/queue ─────────────────────────────────────────────────────────
+// ── GET /reviews/queue 
 // Submissions the logged-in reviewer can review:
 // - must be PENDING_REVIEW
 // - reviewer must be on the project
@@ -118,7 +118,7 @@ router.get('/queue', async (req: Request, res: Response) => {
   }
 });
 
-// ── POST /reviews ──────────────────────────────────────────────────────────────
+// ── POST /reviews 
 router.post('/', validate(schemas.createReview), async (req: Request, res: Response) => {
   const { submissionId, rating, status, feedback } = req.body;
   const reviewerId = req.user!.id;
@@ -220,7 +220,7 @@ router.post('/', validate(schemas.createReview), async (req: Request, res: Respo
   }
 });
 
-// ── GET /reviews/reviewer/history ─────────────────────────────────────────────
+// ── GET /reviews/reviewer/history 
 router.get('/reviewer/history', async (req: Request, res: Response) => {
   const { projectId } = req.query;
   const reviewerId = req.user!.id;
@@ -278,7 +278,7 @@ router.get('/reviewer/history', async (req: Request, res: Response) => {
   }
 });
 
-// ── GET /reviews/reviewer/dashboard ───────────────────────────────────────────
+// ── GET /reviews/reviewer/dashboard 
 router.get('/reviewer/dashboard', async (req: Request, res: Response) => {
   const reviewerId = req.user!.id;
   try {
