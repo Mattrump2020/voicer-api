@@ -18,7 +18,7 @@ import { v4 as uuidv4 } from 'uuid';
 const router = Router();
 router.use(authenticate);
 
-// ── POST /submissions/upload-url ──────────────────────────────────────────────
+// ── POST /submissions/upload-url 
 // Frontend requests a signed upload URL from the server.
 // Server controls the storage path (prevents path traversal / manipulation).
 // Frontend uses this URL to PUT the audio file directly to Supabase Storage.
@@ -60,7 +60,7 @@ router.post('/upload-url', validate(schemas.requestUploadUrl), async (req: Reque
   }
 });
 
-// ── POST /submissions ─────────────────────────────────────────────────────────
+// ── POST /submissions 
 // Called AFTER the frontend has uploaded the file directly to Supabase Storage.
 // Body contains the storagePath returned from /upload-url.
 router.post('/', validate(schemas.createSubmission), async (req: Request, res: Response) => {
@@ -140,7 +140,7 @@ router.post('/', validate(schemas.createSubmission), async (req: Request, res: R
   }
 });
 
-// ── GET /submissions/:submissionId ────────────────────────────────────────────
+// ── GET /submissions/:submissionId 
 router.get('/:submissionId', async (req: Request, res: Response) => {
   try {
     const [sub] = await db
@@ -236,7 +236,7 @@ router.get('/contributor/history', async (req: Request, res: Response) => {
   }
 });
 
-// ── GET /submissions/contributor/dashboard ────────────────────────────────────
+// ── GET /submissions/contributor/dashboard 
 router.get('/contributor/dashboard', async (req: Request, res: Response) => {
   const userId = req.user!.id;
 
