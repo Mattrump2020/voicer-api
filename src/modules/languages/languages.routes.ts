@@ -8,7 +8,7 @@ import logger from '../../utils/logger';
 
 const router = Router();
 
-// ── GET /languages ─────────────────────────────────────────────────────────
+// ── GET /languages 
 // PUBLIC — no auth needed. Frontend needs this for dropdowns before login.
 router.get('/', async (_req, res: Response) => {
   try {
@@ -23,10 +23,10 @@ router.get('/', async (_req, res: Response) => {
   }
 });
 
-// Everything below this line requires a JWT
+
 router.use(authenticate);
 
-// ── POST /languages/user ───────────────────────────────────────────────────
+// ── POST /languages/user 
 router.post('/user', validate(schemas.setUserLanguages), async (req: Request, res: Response) => {
   const { languages: langs } = req.body;
   const userId = req.user!.id;
@@ -60,7 +60,7 @@ router.post('/user', validate(schemas.setUserLanguages), async (req: Request, re
   }
 });
 
-// ── GET /languages/user ────────────────────────────────────────────────────
+// ── GET /languages/user 
 router.get('/user', async (req: Request, res: Response) => {
   try {
     const rows = await db
