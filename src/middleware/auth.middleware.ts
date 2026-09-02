@@ -24,10 +24,9 @@ interface JwtPayload {
   email: string;
 }
 
-// ─────────────────────────────────────────────────────────────
+
 // authenticate — verifies JWT and loads user onto req.user
 // Apply to every protected route
-// ─────────────────────────────────────────────────────────────
 
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
   const header = req.headers.authorization;
@@ -60,10 +59,9 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
   }
 };
 
-// ─────────────────────────────────────────────────────────────
+
 // requireProjectRole — checks the user's role on a specific project
 // Usage: router.patch('/:projectId', requireProjectRole(['PROJECT_ADMIN']), handler)
-// ─────────────────────────────────────────────────────────────
 
 export const requireProjectRole = (allowedRoles: string[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -101,10 +99,8 @@ export const requireProjectRole = (allowedRoles: string[]) => {
   };
 };
 
-// ─────────────────────────────────────────────────────────────
-// requireOrgOwner — only the organization owner can proceed
-// ─────────────────────────────────────────────────────────────
 
+// requireOrgOwner — only the organization owner can proceed
 export const requireOrgOwner = async (req: Request, res: Response, next: NextFunction) => {
   const orgId  = req.params.organizationId ?? req.body.organizationId;
   const userId = req.user!.id;
