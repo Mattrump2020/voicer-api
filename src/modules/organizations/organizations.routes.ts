@@ -10,7 +10,7 @@ import logger from '../../utils/logger';
 const router = Router();
 router.use(authenticate);
 
-// ── POST /organizations ───────────────────────────────────────────────────────
+// ── POST /organizations 
 router.post('/', validate(schemas.createOrganization), async (req: Request, res: Response) => {
   const { name, description, country, organizationType } = req.body;
   const ownerId = req.user!.id;
@@ -35,7 +35,7 @@ router.post('/', validate(schemas.createOrganization), async (req: Request, res:
   }
 });
 
-// ── GET /organizations ────────────────────────────────────────────────────────
+// ── GET /organizations 
 router.get('/', async (req: Request, res: Response) => {
   try {
     const orgs = await db
@@ -57,7 +57,7 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-// ── GET /organizations/:organizationId ────────────────────────────────────────
+// ── GET /organizations/:organizationId 
 router.get('/:organizationId', async (req: Request, res: Response) => {
   try {
     const [org] = await db
@@ -79,7 +79,7 @@ router.get('/:organizationId', async (req: Request, res: Response) => {
   }
 });
 
-// ── PATCH /organizations/:organizationId ──────────────────────────────────────
+// ── PATCH /organizations/:organizationId 
 router.patch('/:organizationId', requireOrgOwner, validate(schemas.updateOrganization), async (req: Request, res: Response) => {
   const { name, description, country, organizationType } = req.body;
 
@@ -103,7 +103,7 @@ router.patch('/:organizationId', requireOrgOwner, validate(schemas.updateOrganiz
   }
 });
 
-// ── DELETE /organizations/:organizationId ─────────────────────────────────────
+// ── DELETE /organizations/:organizationId 
 router.delete('/:organizationId', requireOrgOwner, async (req: Request, res: Response) => {
   try {
     // Guard: cannot delete if active projects exist
@@ -131,7 +131,7 @@ router.delete('/:organizationId', requireOrgOwner, async (req: Request, res: Res
   }
 });
 
-// ── PATCH /organizations/:organizationId/transfer-ownership ──────────────────
+// ── PATCH /organizations/:organizationId/transfer-ownership 
 router.patch('/:organizationId/transfer-ownership', requireOrgOwner, async (req: Request, res: Response) => {
   const { newOwnerId } = req.body;
   if (!newOwnerId) return sendError(res, 'newOwnerId is required');
@@ -181,7 +181,7 @@ router.patch('/:organizationId/transfer-ownership', requireOrgOwner, async (req:
   }
 });
 
-// ── GET /organizations/:organizationId/dashboard ──────────────────────────────
+// ── GET /organizations/:organizationId/dashboard 
 router.get('/:organizationId/dashboard', async (req: Request, res: Response) => {
   const { organizationId } = req.params;
   try {
