@@ -12,7 +12,7 @@ import logger from '../../utils/logger';
 const router = Router();
 router.use(authenticate);
 
-// ── POST /members/invite ──────────────────────────────────────────────────────
+// ── POST /members/invite 
 router.post('/invite', validate(schemas.inviteMember), async (req: Request, res: Response) => {
   const { projectId, email, role } = req.body;
   const inviterId = req.user!.id;
@@ -88,7 +88,7 @@ router.post('/invite', validate(schemas.inviteMember), async (req: Request, res:
   }
 });
 
-// ── POST /members/accept-invitation ──────────────────────────────────────────
+// ── POST /members/accept-invitation 
 router.post('/accept-invitation', validate(schemas.acceptInvitation), async (req: Request, res: Response) => {
   const { token } = req.body;
   const userId = req.user!.id;
@@ -129,7 +129,7 @@ router.post('/accept-invitation', validate(schemas.acceptInvitation), async (req
   }
 });
 
-// ── GET /members/projects/:projectId ─────────────────────────────────────────
+// ── GET /members/projects/:projectId
 router.get('/projects/:projectId', async (req: Request, res: Response) => {
   try {
     const members = await db
@@ -158,7 +158,7 @@ router.get('/projects/:projectId', async (req: Request, res: Response) => {
   }
 });
 
-// ── PATCH /members/:memberId/role ─────────────────────────────────────────────
+// ── PATCH /members/:memberId/role
 router.patch('/:memberId/role', async (req: Request, res: Response) => {
   const { role } = req.body;
   if (!['PROJECT_ADMIN', 'CONTRIBUTOR', 'REVIEWER'].includes(role)) {
@@ -179,7 +179,7 @@ router.patch('/:memberId/role', async (req: Request, res: Response) => {
   }
 });
 
-// ── DELETE /members/:memberId ─────────────────────────────────────────────────
+// ── DELETE /members/:memberId 
 router.delete('/:memberId', async (req: Request, res: Response) => {
   try {
     await db.delete(projectMembers).where(eq(projectMembers.id, req.params.memberId));
