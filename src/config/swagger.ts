@@ -30,7 +30,7 @@ const options: swaggerJsdoc.Options = {
         },
       },
       schemas: {
-        // ── Shared ────────────────────────────────────────────────────────
+        // ── Shared 
         SuccessResponse: {
           type: 'object',
           properties: {
@@ -47,7 +47,7 @@ const options: swaggerJsdoc.Options = {
             errors:  { type: 'array', items: { type: 'string' } },
           },
         },
-        // ── Auth ──────────────────────────────────────────────────────────
+        // ── Auth 
         RegisterBody: {
           type: 'object', required: ['firstName','lastName','email','password'],
           properties: {
@@ -64,7 +64,7 @@ const options: swaggerJsdoc.Options = {
             password: { type: 'string', example: 'mypassword123' },
           },
         },
-        // ── Organization ──────────────────────────────────────────────────
+        // ── Organization 
         CreateOrgBody: {
           type: 'object', required: ['name'],
           properties: {
@@ -74,7 +74,7 @@ const options: swaggerJsdoc.Options = {
             organizationType: { type: 'string', example: 'Research Institution'},
           },
         },
-        // ── Project ───────────────────────────────────────────────────────
+        // ── Project 
         CreateProjectBody: {
           type: 'object', required: ['organizationId','name','languages'],
           properties: {
@@ -86,7 +86,7 @@ const options: swaggerJsdoc.Options = {
             endDate:        { type: 'string', format: 'date', example: '2026-12-31' },
           },
         },
-        // ── Task ──────────────────────────────────────────────────────────
+        // ── Task 
         CreateTaskBody: {
           type: 'object', required: ['projectId','title','languageId','taskType'],
           properties: {
@@ -99,7 +99,7 @@ const options: swaggerJsdoc.Options = {
             targetDuration: { type: 'integer', example: 30, description: 'seconds' },
           },
         },
-        // ── Submission ────────────────────────────────────────────────────
+        // ── Submission 
         RequestUploadUrlBody: {
           type: 'object', required: ['taskId','fileName','mimeType'],
           properties: {
@@ -119,7 +119,7 @@ const options: swaggerJsdoc.Options = {
             parentId:      { type: 'string', format: 'uuid', description: 'Only for resubmissions' },
           },
         },
-        // ── Review ────────────────────────────────────────────────────────
+        // ── Review 
         CreateReviewBody: {
           type: 'object', required: ['submissionId','rating','status'],
           properties: {
@@ -129,7 +129,7 @@ const options: swaggerJsdoc.Options = {
             feedback:     { type: 'string', example: 'Clear audio, natural pacing', description: 'Required when status is REJECTED' },
           },
         },
-        // ── Export ────────────────────────────────────────────────────────
+        // ── Export 
         CreateExportBody: {
           type: 'object', required: ['projectId','format'],
           properties: {
@@ -146,7 +146,7 @@ const options: swaggerJsdoc.Options = {
     security: [{ bearerAuth: [] }],
 
     paths: {
-      // ── AUTH ──────────────────────────────────────────────────────────────
+      // ── AUTH 
       '/auth/register': {
         post: {
           tags: ['Auth'], summary: 'Register a new user', security: [],
@@ -215,7 +215,7 @@ const options: swaggerJsdoc.Options = {
         },
       },
 
-      // ── ORGANIZATIONS ─────────────────────────────────────────────────────
+      // ── ORGANIZATIONS 
       '/organizations': {
         post: { tags: ['Organizations'], summary: 'Create organization', requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/CreateOrgBody' } } } }, responses: { 201: { description: 'Organization created' } } },
         get:  { tags: ['Organizations'], summary: 'List my organizations', responses: { 200: { description: 'Array of organizations' } } },
@@ -237,7 +237,7 @@ const options: swaggerJsdoc.Options = {
         get: { tags: ['Organizations'], summary: 'Dashboard stats', parameters: [{ in: 'path', name: 'organizationId', required: true, schema: { type: 'string' } }], responses: { 200: { description: 'Stats' } } },
       },
 
-      // ── PROJECTS ──────────────────────────────────────────────────────────
+      // ── PROJECTS 
       '/projects': {
         post: { tags: ['Projects'], summary: 'Create project (org owner only)', requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/CreateProjectBody' } } } }, responses: { 201: { description: 'Project created' } } },
         get:  { tags: ['Projects'], summary: 'List projects I am a member of', parameters: [{ in: 'query', name: 'organizationId', schema: { type: 'string' } }], responses: { 200: { description: 'Projects array' } } },
@@ -250,7 +250,7 @@ const options: swaggerJsdoc.Options = {
       '/projects/{projectId}/archive':   { patch: { tags: ['Projects'], summary: 'Archive project', parameters: [{ in: 'path', name: 'projectId', required: true, schema: { type: 'string' } }], responses: { 200: { description: 'Archived' } } } },
       '/projects/{projectId}/dashboard': { get:   { tags: ['Projects'], summary: 'Project dashboard stats', parameters: [{ in: 'path', name: 'projectId', required: true, schema: { type: 'string' } }], responses: { 200: { description: 'Stats' } } } },
 
-      // ── MEMBERS ───────────────────────────────────────────────────────────
+      // ── MEMBERS 
       '/members/invite': {
         post: {
           tags: ['Members'], summary: 'Invite a member to a project',
@@ -275,14 +275,14 @@ const options: swaggerJsdoc.Options = {
         delete: { tags: ['Members'], summary: 'Remove member', parameters: [{ in: 'path', name: 'memberId', required: true, schema: { type: 'string' } }], responses: { 200: { description: 'Removed' } } },
       },
 
-      // ── LANGUAGES ─────────────────────────────────────────────────────────
+      // ── LANGUAGES 
       '/languages':      { get:  { tags: ['Languages'], summary: 'List all supported languages',        security: [], responses: { 200: { description: 'Languages array' } } } },
       '/languages/user': {
         get:  { tags: ['Languages'], summary: 'Get my language proficiencies',    responses: { 200: { description: 'User languages' } } },
         post: { tags: ['Languages'], summary: 'Set my language proficiencies (replaces all)', requestBody: { required: true, content: { 'application/json': { schema: { type: 'object', properties: { languages: { type: 'array', items: { type: 'object', properties: { languageId: { type: 'string', format: 'uuid' }, proficiency: { type: 'string', enum: ['BASIC','INTERMEDIATE','ADVANCED','NATIVE'] } }, required: ['languageId','proficiency'] } } }, required: ['languages'] } } } }, responses: { 200: { description: 'Updated' } } },
       },
 
-      // ── TASKS ─────────────────────────────────────────────────────────────
+      // ── TASKS 
       '/tasks': {
         post: { tags: ['Tasks'], summary: 'Create task (project admin)', requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/CreateTaskBody' } } } }, responses: { 201: { description: 'Task created' } } },
         get:  { tags: ['Tasks'], summary: 'List tasks in a project', parameters: [{ in: 'query', name: 'projectId', required: true, schema: { type: 'string' } }], responses: { 200: { description: 'Tasks' } } },
@@ -294,7 +294,7 @@ const options: swaggerJsdoc.Options = {
         delete: { tags: ['Tasks'], summary: 'Delete task (blocks if approved submissions exist)', parameters: [{ in: 'path', name: 'taskId', required: true, schema: { type: 'string' } }], responses: { 200: { description: 'Deleted' }, 400: { description: 'Has approved submissions' } } },
       },
 
-      // ── SUBMISSIONS ───────────────────────────────────────────────────────
+      // ── SUBMISSIONS 
       '/submissions/upload-url': {
         post: {
           tags: ['Submissions'], summary: 'Step 1 — get signed upload URL (server controls storage path)',
@@ -321,7 +321,7 @@ const options: swaggerJsdoc.Options = {
         },
       },
 
-      // ── REVIEWS ───────────────────────────────────────────────────────────
+      // ── REVIEWS 
       '/reviews/queue': {
         get: {
           tags: ['Reviews'], summary: 'Reviewer queue — pending submissions matching reviewer\'s languages',
@@ -340,14 +340,14 @@ const options: swaggerJsdoc.Options = {
       '/reviews/reviewer/history':   { get: { tags: ['Reviews'], summary: 'Reviewer history', parameters: [{ in: 'query', name: 'projectId', schema: { type: 'string' } }], responses: { 200: { description: 'History' } } } },
       '/reviews/reviewer/dashboard': { get: { tags: ['Reviews'], summary: 'Reviewer dashboard stats', responses: { 200: { description: 'Stats' } } } },
 
-      // ── NOTIFICATIONS ─────────────────────────────────────────────────────
+      // ── NOTIFICATIONS 
       '/notifications': {
         get: { tags: ['Notifications'], summary: 'Get notifications', parameters: [{ in: 'query', name: 'unreadOnly', schema: { type: 'boolean' } }], responses: { 200: { description: 'Notifications + unreadCount' } } },
       },
       '/notifications/read-all':           { patch: { tags: ['Notifications'], summary: 'Mark all as read', responses: { 200: { description: 'Done' } } } },
       '/notifications/{notificationId}/read': { patch: { tags: ['Notifications'], summary: 'Mark one as read', parameters: [{ in: 'path', name: 'notificationId', required: true, schema: { type: 'string' } }], responses: { 200: { description: 'Done' } } } },
 
-      // ── EXPORTS ───────────────────────────────────────────────────────────
+      // ── EXPORTS
       '/exports': {
         post: { tags: ['Exports'], summary: 'Start a dataset export (async)', description: 'Returns exportId immediately. Poll GET /exports/:id until status=READY, then call GET /exports/:id/download for a signed URL.', requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/CreateExportBody' } } } }, responses: { 201: { description: 'Export started' } } },
         get:  { tags: ['Exports'], summary: 'List my exports', parameters: [{ in: 'query', name: 'projectId', schema: { type: 'string' } }], responses: { 200: { description: 'Exports' } } },
