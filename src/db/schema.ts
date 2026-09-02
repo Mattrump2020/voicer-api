@@ -86,9 +86,7 @@ export const organizationMembers = pgTable(
   })
 );
 
-// ─────────────────────────────────────────────────────────────
 // LANGUAGES
-// ─────────────────────────────────────────────────────────────
 export const languages = pgTable('languages', {
   id:        uuid('id').primaryKey().defaultRandom(),
   name:      varchar('name', { length: 100 }).unique().notNull(),
@@ -96,9 +94,8 @@ export const languages = pgTable('languages', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
 });
 
-// ─────────────────────────────────────────────────────────────
+
 // USER LANGUAGES
-// ─────────────────────────────────────────────────────────────
 export const userLanguages = pgTable(
   'user_languages',
   {
@@ -114,9 +111,8 @@ export const userLanguages = pgTable(
   })
 );
 
-// ─────────────────────────────────────────────────────────────
+
 // PROJECTS
-// ─────────────────────────────────────────────────────────────
 export const projects = pgTable(
   'projects',
   {
@@ -137,9 +133,8 @@ export const projects = pgTable(
   })
 );
 
-// ─────────────────────────────────────────────────────────────
+
 // PROJECT LANGUAGES
-// ─────────────────────────────────────────────────────────────
 export const projectLanguages = pgTable(
   'project_languages',
   {
@@ -151,9 +146,8 @@ export const projectLanguages = pgTable(
   })
 );
 
-// ─────────────────────────────────────────────────────────────
+
 // PROJECT MEMBERS
-// ─────────────────────────────────────────────────────────────
 export const projectMembers = pgTable(
   'project_members',
   {
@@ -172,9 +166,8 @@ export const projectMembers = pgTable(
   })
 );
 
-// ─────────────────────────────────────────────────────────────
+
 // INVITATIONS
-// ─────────────────────────────────────────────────────────────
 export const invitations = pgTable(
   'invitations',
   {
@@ -196,9 +189,8 @@ export const invitations = pgTable(
   })
 );
 
-// ─────────────────────────────────────────────────────────────
+
 // TASKS
-// ─────────────────────────────────────────────────────────────
 export const tasks = pgTable(
   'tasks',
   {
@@ -222,9 +214,8 @@ export const tasks = pgTable(
   })
 );
 
-// ─────────────────────────────────────────────────────────────
+
 // SUBMISSIONS
-// ─────────────────────────────────────────────────────────────
 export const submissions = pgTable(
   'submissions',
   {
@@ -248,9 +239,7 @@ export const submissions = pgTable(
   })
 );
 
-// ─────────────────────────────────────────────────────────────
 // REVIEWS
-// ─────────────────────────────────────────────────────────────
 export const reviews = pgTable(
   'reviews',
   {
@@ -269,9 +258,8 @@ export const reviews = pgTable(
   })
 );
 
-// ─────────────────────────────────────────────────────────────
+
 // NOTIFICATIONS
-// ─────────────────────────────────────────────────────────────
 export const notifications = pgTable(
   'notifications',
   {
@@ -290,9 +278,8 @@ export const notifications = pgTable(
   })
 );
 
-// ─────────────────────────────────────────────────────────────
+
 // DATASET EXPORTS
-// ─────────────────────────────────────────────────────────────
 export const datasetExports = pgTable(
   'dataset_exports',
   {
@@ -310,9 +297,8 @@ export const datasetExports = pgTable(
   })
 );
 
-// ─────────────────────────────────────────────────────────────
+
 // AUDIT LOGS
-// ─────────────────────────────────────────────────────────────
 export const auditLogs = pgTable(
   'audit_logs',
   {
@@ -330,9 +316,7 @@ export const auditLogs = pgTable(
   })
 );
 
-// ─────────────────────────────────────────────────────────────
 // RELATIONS
-// ─────────────────────────────────────────────────────────────
 export const usersRelations = relations(users, ({ many }) => ({
   organizations:           many(organizations),
   organizationMemberships: many(organizationMembers),
