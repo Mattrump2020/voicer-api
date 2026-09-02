@@ -8,7 +8,7 @@ import logger from '../../utils/logger';
 const router = Router();
 router.use(authenticate);
 
-// ── GET /notifications ─────────────────────────────────────────────────────────
+// ── GET /notifications 
 router.get('/', async (req: Request, res: Response) => {
   const { unreadOnly } = req.query;
 
@@ -32,7 +32,7 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-// ── PATCH /notifications/:id/read ──────────────────────────────────────────────
+// ── PATCH /notifications/:id/read 
 router.patch('/:notificationId/read', async (req: Request, res: Response) => {
   try {
     await db.update(notifications)
@@ -51,7 +51,7 @@ router.patch('/:notificationId/read', async (req: Request, res: Response) => {
   }
 });
 
-// ── PATCH /notifications/read-all ──────────────────────────────────────────────
+// ── PATCH /notifications/read-all 
 router.patch('/read-all', async (req: Request, res: Response) => {
   try {
     await db.update(notifications)
