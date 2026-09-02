@@ -29,7 +29,7 @@ app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 const BASE = '/api/v1';
 
-// ── Security ──────────────────────────────────────────────────────────────────
+// ── Security
 app.use(helmet({
   contentSecurityPolicy: process.env.NODE_ENV === 'production' ? undefined : false,
 }));
@@ -41,7 +41,7 @@ app.use(helmet({
 
 app.use(cors());
 
-// ── Rate limiting ─────────────────────────────────────────────────────────────
+// ── Rate limiting 
 const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max:      200,
@@ -58,7 +58,7 @@ app.use(globalLimiter);
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// ── Swagger UI ────────────────────────────────────────────────────────────────
+// ── Swagger UI 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   customSiteTitle: 'Voicer AI API Docs',
   customCss: '.swagger-ui .topbar { background-color: #1BB8C4; }',
@@ -70,12 +70,12 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
 
 app.get('/docs.json', (_req: Request, res: Response) => res.json(swaggerSpec));
 
-// ── Health check ──────────────────────────────────────────────────────────────
+// ── Health check 
 app.get('/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString(), service: 'voicer-api' });
 });
 
-// ── API Routes ────────────────────────────────────────────────────────────────
+// ── API Routes 
 app.use(`${BASE}/auth`,          authLimiter, authRoutes);
 app.use(`${BASE}/organizations`, organizationRoutes);
 app.use(`${BASE}/projects`,      projectRoutes);
@@ -87,16 +87,16 @@ app.use(`${BASE}/reviews`,       reviewRoutes);
 app.use(`${BASE}/notifications`, notificationRoutes);
 app.use(`${BASE}/exports`,       exportRoutes);
 
-// ── 404 ───────────────────────────────────────────────────────────────────────
+// ── 404 
 app.use((_req: Request, res: Response) => sendError(res, 'Route not found', 404));
 
-// ── Global error handler ──────────────────────────────────────────────────────
+// ── Global error handler 
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   logger.error('Unhandled error', { message: err.message, stack: err.stack });
   sendError(res, 'Internal server error', 500);
 });
 
-// ── Start ─────────────────────────────────────────────────────────────────────
+// ── Start
 app.listen(PORT, () => {
   logger.info(`🚀  Voicer API running on http://localhost:${PORT}`);
   logger.info(`📖  Swagger UI   → http://localhost:${PORT}/docs`);
