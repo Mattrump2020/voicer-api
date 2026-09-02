@@ -15,9 +15,9 @@ import {
 } from 'drizzle-orm/pg-core';
 import { relations, sql } from 'drizzle-orm';
 
-// ─────────────────────────────────────────────────────────────
+
 // ENUMS
-// ─────────────────────────────────────────────────────────────
+
 export const userStatusEnum       = pgEnum('user_status',         ['ACTIVE', 'INACTIVE', 'SUSPENDED']);
 export const orgMemberRoleEnum    = pgEnum('org_member_role',     ['OWNER', 'ADMIN']);
 export const projectStatusEnum    = pgEnum('project_status',      ['DRAFT', 'ACTIVE', 'PAUSED', 'COMPLETED', 'ARCHIVED']);
@@ -32,9 +32,9 @@ export const invitationStatusEnum = pgEnum('invitation_status',   ['PENDING', 'A
 export const exportFormatEnum     = pgEnum('export_format',       ['CSV', 'JSON', 'ZIP']);
 export const exportStatusEnum     = pgEnum('export_status',       ['PROCESSING', 'READY', 'FAILED']);
 
-// ─────────────────────────────────────────────────────────────
+
 // USERS
-// ─────────────────────────────────────────────────────────────
+
 export const users = pgTable('users', {
   id:                   uuid('id').primaryKey().defaultRandom(),
   firstName:            varchar('first_name',  { length: 100 }).notNull(),
@@ -55,9 +55,8 @@ export const users = pgTable('users', {
   updatedAt:            timestamp('updated_at').defaultNow().notNull(),
 });
 
-// ─────────────────────────────────────────────────────────────
+
 // ORGANIZATIONS
-// ─────────────────────────────────────────────────────────────
 export const organizations = pgTable('organizations', {
   id:               uuid('id').primaryKey().defaultRandom(),
   name:             varchar('name',              { length: 255 }).notNull(),
@@ -69,9 +68,8 @@ export const organizations = pgTable('organizations', {
   updatedAt:        timestamp('updated_at').defaultNow().notNull(),
 });
 
-// ─────────────────────────────────────────────────────────────
+
 // ORGANIZATION MEMBERS
-// ─────────────────────────────────────────────────────────────
 export const organizationMembers = pgTable(
   'organization_members',
   {
@@ -422,9 +420,8 @@ export const datasetExportsRelations = relations(datasetExports, ({ one }) => ({
   generatedBy: one(users,    { fields: [datasetExports.generatedBy], references: [users.id] }),
 }));
 
-// ─────────────────────────────────────────────────────────────
+
 // INFERRED TYPES — use these in route handlers instead of writing interfaces
-// ─────────────────────────────────────────────────────────────
 export type User          = typeof users.$inferSelect;
 export type NewUser       = typeof users.$inferInsert;
 export type Organization  = typeof organizations.$inferSelect;
