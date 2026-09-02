@@ -1,7 +1,4 @@
-/**
- * Seed file — run once after migration:
- *   npm run db:seed
- */
+
 import { db, languages } from '../index';
 import logger from '../../utils/logger';
 
@@ -24,7 +21,7 @@ async function seed() {
   for (const lang of LANGUAGES) {
     await db.insert(languages)
       .values(lang)
-      .onConflictDoNothing(); // safe to re-run
+      .onConflictDoNothing(); 
   }
 
   logger.info(`✅ Seeded ${LANGUAGES.length} languages`);
