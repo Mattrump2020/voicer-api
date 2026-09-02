@@ -20,7 +20,7 @@ import { v4 as uuidv4 } from 'uuid';
 const router = Router();
 router.use(authenticate);
 
-// ── helper: verify export access ──────────────────────────────────────────────
+// ── helper: verify export access 
 const canExport = async (projectId: string, userId: string) => {
   const [org] = await db
     .select({ ownerId: organizations.ownerId })
@@ -40,7 +40,7 @@ const canExport = async (projectId: string, userId: string) => {
   return mem?.role === 'PROJECT_ADMIN';
 };
 
-// ── helper: fetch submission data for export ───────────────────────────────────
+// ── helper: fetch submission data for export 
 const fetchExportRows = async (
   projectId: string,
   approvedOnly: boolean,
@@ -85,7 +85,7 @@ const fetchExportRows = async (
     .where(and(...conditions))
     .orderBy(submissions.submittedAt);
 
-  // Apply date filters in JS (simpler than drizzle date range syntax)
+  // Apply date filters in JS 
   return rows.filter(r => {
     const t = new Date(r.submittedAt).getTime();
     if (startDate && t < new Date(startDate).getTime()) return false;
@@ -94,7 +94,7 @@ const fetchExportRows = async (
   });
 };
 
-// ── POST /exports ──────────────────────────────────────────────────────────────
+// ── POST /exports 
 router.post('/', validate(schemas.generateExport), async (req: Request, res: Response) => {
   const { projectId, format, approvedOnly, languageId, startDate, endDate } = req.body;
   const userId = req.user!.id;
@@ -175,7 +175,7 @@ router.post('/', validate(schemas.generateExport), async (req: Request, res: Res
   return sendCreated(res, { exportId: exportRecord.id }, 'Export started — poll GET /exports/:id for status');
 });
 
-// ── GET /exports/:exportId ─────────────────────────────────────────────────────
+// ── GET /exports/:exportId
 router.get('/:exportId', async (req: Request, res: Response) => {
   try {
     const [exp] = await db
@@ -192,7 +192,7 @@ router.get('/:exportId', async (req: Request, res: Response) => {
   }
 });
 
-// ── GET /exports/:exportId/download ───────────────────────────────────────────
+// ── GET /exports/:exportId/download 
 router.get('/:exportId/download', async (req: Request, res: Response) => {
   try {
     const [exp] = await db
@@ -214,7 +214,7 @@ router.get('/:exportId/download', async (req: Request, res: Response) => {
   }
 });
 
-// ── GET /exports?projectId= ────────────────────────────────────────────────────
+// ── GET /exports?projectId= 
 router.get('/', async (req: Request, res: Response) => {
   const { projectId } = req.query;
 
