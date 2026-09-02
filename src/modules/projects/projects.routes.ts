@@ -13,7 +13,7 @@ import logger from '../../utils/logger';
 const router = Router();
 router.use(authenticate);
 
-// ── POST /projects ────────────────────────────────────────────────────────────
+// ── POST /projects 
 router.post('/', validate(schemas.createProject), async (req: Request, res: Response) => {
   const { organizationId, name, description, languages: langIds, startDate, endDate } = req.body;
   const userId = req.user!.id;
@@ -54,7 +54,7 @@ router.post('/', validate(schemas.createProject), async (req: Request, res: Resp
   }
 });
 
-// ── GET /projects ─────────────────────────────────────────────────────────────
+// ── GET /projects
 router.get('/', async (req: Request, res: Response) => {
   const { organizationId } = req.query;
 
@@ -95,7 +95,7 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
-// ── GET /projects/:projectId ──────────────────────────────────────────────────
+// ── GET /projects/:projectId 
 router.get('/:projectId', async (req: Request, res: Response) => {
   try {
     const [project] = await db
@@ -119,7 +119,7 @@ router.get('/:projectId', async (req: Request, res: Response) => {
   }
 });
 
-// ── PATCH /projects/:projectId ────────────────────────────────────────────────
+// ── PATCH /projects/:projectId
 router.patch('/:projectId', requireProjectRole(['PROJECT_ADMIN']), validate(schemas.updateProject), async (req: Request, res: Response) => {
   const { name, description, languages: langIds, startDate, endDate, status } = req.body;
 
@@ -151,7 +151,7 @@ router.patch('/:projectId', requireProjectRole(['PROJECT_ADMIN']), validate(sche
   }
 });
 
-// ── PATCH /projects/:projectId/archive ───────────────────────────────────────
+// ── PATCH /projects/:projectId/archive 
 router.patch('/:projectId/archive', async (req: Request, res: Response) => {
   try {
     const [project] = await db
@@ -182,7 +182,7 @@ router.patch('/:projectId/archive', async (req: Request, res: Response) => {
   }
 });
 
-// ── DELETE /projects/:projectId ───────────────────────────────────────────────
+// ── DELETE /projects/:projectId 
 router.delete('/:projectId', async (req: Request, res: Response) => {
   try {
     const [project] = await db
@@ -205,7 +205,7 @@ router.delete('/:projectId', async (req: Request, res: Response) => {
   }
 });
 
-// ── GET /projects/:projectId/dashboard ───────────────────────────────────────
+// ── GET /projects/:projectId/dashboard 
 router.get('/:projectId/dashboard', async (req: Request, res: Response) => {
   const { projectId } = req.params;
   try {
